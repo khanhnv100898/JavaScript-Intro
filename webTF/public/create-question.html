@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/create-question.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <h2 id="title">Hãy hỏi cộng đồng một câu hỏi đúng/sai hoặc có/không</h2>
+
+    <form action="/create-question" method="POST">
+        <textarea class="input" name="content" id="content" cols="30" rows="10">
+
+        </textarea>
+        <div id="remain-characters">200 character left</div>
+        <input type="submit" value="Gửi">
+    </form>
+
+    <script src="./create-question.js"></script>
+</body>
+
+</html>
