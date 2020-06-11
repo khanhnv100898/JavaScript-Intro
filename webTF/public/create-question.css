@@ -1,13 +1,17 @@
 * {
-    margin: 0px;
-    padding: 0px;
-    box-sizing: border-box;
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
 }
 
 body {
-    padding: 50px 100px;
+  padding: 50px 100px;
 }
 
 .input {
-    width: 100%;
+  width: 100%;
+}
+
+#error-message {
+  color: red;
 }

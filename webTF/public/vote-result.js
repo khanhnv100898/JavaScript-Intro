@@ -6,7 +6,7 @@ $(document).ready(() => {
         url: `/get-question-by-id?questionId=${questionId}`,
         type: 'GET',
         success: (data) => {
-            if (data.id) {
+            if (data.id !== null) {
                 document.getElementById('question-content').innerText = data.content;
                 document.getElementById('total-votes').innerText = data.yes + data.no;
 
@@ -15,7 +15,7 @@ $(document).ready(() => {
 
                 document.getElementById('yes-percent').innerText = `${yesPercent.toFixed()}%`;
                 document.getElementById('no-percent').innerText = `${noPercent}%`;
-            }else{
+            } else {
                 document.getElementById('question-content').innerText = 'Question not found';
             }
         },

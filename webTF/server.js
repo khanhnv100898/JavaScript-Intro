@@ -10,45 +10,7 @@ server.use(bodyParser.json());
 
 
 server.get('/', (req, res) => {
-    fs.readFile('./data.json', (err, data) => {
-        if (err) {
-            res.status(500).send('Internal server error!');
-        }
-
-        const questions = JSON.parse(data);
-        const randomIndex = Math.floor(Math.random() * (questions.length));
-        const randomQuestion = questions[randomIndex];
-        console.log(randomIndex,randomQuestion);
-
-        res.status(200).send(`
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
-    </head>
-    <body>
-        <h2>${randomQuestion.content}</h2>
-
-        <div>
-            <form method = 'get' action = '/vote/${randomQuestion.id}/yes'>
-                <input type = 'submit' value='yes' />
-            </form>
-            <form method = 'get' action = '/vote/${randomQuestion.id}/no'>
-                <input type = 'submit' value='no' />
-            </form>
-        </div>
-
-        <div>
-            <button id = 'question-result'>Ressult</button>
-            <button id = 'other-question'>Other question</button>
-        </div>
-        <script src = './public/index.js'></script>
-    </body>
-    </html>
-    `);
-    });
+    res.status(200).sendFile(path.resolve(__dirname + '/public/index.html'));
 });
 
 server.get('/create-question', (req, res) => {
@@ -57,6 +19,7 @@ server.get('/create-question', (req, res) => {
 });
 
 server.post('/create-question', (req, res) => {
+    console.log(req.body);
     fs.readFile('./data.json', (err, data) => {
         if (err) {
             res.status(500).send('Internal server error!');
@@ -76,7 +39,9 @@ server.post('/create-question', (req, res) => {
             if (err) {
                 res.status(500).send('Internal server error!');
             }
-            res.status(201).end('Sucess!');
+            res.status(201).json({
+                id: questions.length - 1,
+            });
         });
     });
 });
@@ -134,12 +99,12 @@ server.get('/get-question-by-id', (req, res) => {
         if (selectQuestion) {
             res.status(200).json(selectQuestion);
         } else {
-            res.status(200).json({ message: 'Question not found!' });   
+            res.status(200).json({ message: 'Question not found!' });
         }
     });
 });
 
-server.get('/random-question', (req,res) => {
+server.get('/random-question', (req, res) => {
     fs.readFile('./data.json', (err, data) => {
         if (err) {
             res.status(500).send('Internal server error!');
@@ -148,7 +113,7 @@ server.get('/random-question', (req,res) => {
         const questions = JSON.parse(data);
         const randomIndex = Math.floor(Math.random() * (questions.length));
         const randomQuestion = questions[randomIndex];
-        res.status(200).json(randomQuestion);    
+        res.status(200).json(randomQuestion);
     });
 });
 
